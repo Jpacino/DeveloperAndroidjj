@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/special_item_right_iv"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"/>
+    <RelativeLayout
+        android:id="@+id/special_item_right_rl"
+        android:layout_width="match_parent"
+        android:layout_alignBottom="@id/special_item_right_iv"
+        android:background="#30000000"
+        android:padding="3dp"
+        android:layout_height="38dp" >
+        <TextView
+            android:id="@+id/special_item_left_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="国奥加油"
+            android:textSize="12dp"
+            android:textColor="@color/button_n"
+            android:layout_marginBottom="5dp"/>
+        <ImageView
+            android:id="@+id/special_item_left_iv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/game_clock"
+            android:layout_below="@+id/special_item_left_tv"
+            android:layout_alignLeft="@+id/special_item_left_tv"
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginBottom="3dp"
+            android:layout_alignStart="@+id/special_item_left_tv" />
+        <TextView
+            android:id="@+id/special_item_left_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016-08-08"
+            android:textColor="@color/button_n"
+            android:textSize="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/special_item_left_iv2"/>
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_below="@id/special_item_right_rl"
+        android:background="@color/itemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+
+</RelativeLayout>

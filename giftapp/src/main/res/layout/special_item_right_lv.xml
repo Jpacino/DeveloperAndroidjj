@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/special_item_right_iv"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"/>
+    <RelativeLayout
+        android:id="@+id/special_item_right_rl"
+        android:layout_width="match_parent"
+        android:layout_alignBottom="@id/special_item_right_iv"
+        android:background="#30000000"
+        android:layout_height="38dp" >
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/special_item_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新游周刊第88期"
+            android:textSize="15dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/button_n" />
+        <ImageView
+            android:id="@+id/special_item_right_iv2"
+            android:layout_alignParentRight="true"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/kaizi"
+            android:layout_marginRight="5dp"
+            />
+
+
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_below="@+id/special_item_right_rl"
+        android:background="@color/itemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+
+</RelativeLayout>

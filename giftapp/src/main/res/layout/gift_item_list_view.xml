@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+    <ImageView
+        android:id="@+id/hot_item_image_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher"/>
+    <TextView
+        android:layout_alignTop="@id/hot_item_image_icon"
+        android:layout_alignLeft="@+id/gift_item_text_view01"
+        android:text="hello"
+
+        android:id="@+id/hot_item_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@id/gift_item_text_view01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/hot_item_image_icon"
+        android:text="测试"/>
+    <TextView
+        android:textColor="#fd6563"
+        android:layout_alignBottom="@id/hot_item_image_icon"
+        android:layout_alignLeft="@+id/gift_item_text_view01"
+        android:textSize="10dp"
+        android:id="@+id/hot_item_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="2dp"
+        android:layout_alignBottom="@id/hot_item_image_icon"
+        android:layout_toRightOf="@id/hot_item_text_size"
+        android:text="时间:2016-08-05"
+        android:textSize="10dp"
+        android:id="@+id/gift_item_text_addtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:textSize="12dp"
+        android:id="@+id/gift_item_btn"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="立即领取"
+        android:layout_width="wrap_content"
+        android:color="@color/button_u"
+        android:textColor="@color/btn_selector"
+        android:layout_height="35dp" />
+
+</RelativeLayout>

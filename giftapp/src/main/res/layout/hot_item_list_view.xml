@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+    <ImageView
+        android:id="@+id/hot_item_image_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher"/>
+    <TextView
+        android:layout_alignTop="@id/hot_item_image_icon"
+        android:layout_alignLeft="@+id/hot_item_text_typename"
+        android:text="hello"
+
+        android:id="@+id/hot_item_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@id/hot_item_text_typename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/hot_item_image_icon"
+        android:text="测试"/>
+    <TextView
+        android:layout_alignBottom="@id/hot_item_image_icon"
+        android:layout_alignLeft="@id/hot_item_text_typename"
+        android:text="大小:1G"
+        android:textSize="10dp"
+        android:id="@+id/hot_item_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/hot_item_clicks"
+        android:layout_marginRight="2dp"
+        android:textColor="@color/button_u"
+        android:textSize="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/hot_item_tv2"
+        android:layout_centerVertical="true"
+        android:text="888"/>
+
+
+<TextView
+    android:id="@id/hot_item_tv2"
+    android:layout_marginRight="10dp"
+    android:textColor="@color/textGray"
+    android:textSize="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:text="人在玩"/>
+
+</RelativeLayout>
