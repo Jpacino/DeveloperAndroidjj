@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SpecialFragment specialFragment;
     GameFragment gameFragment;
 
+    //a
     private Fragment showFragment;
 
     private RadioGroup mRadioGroup;
