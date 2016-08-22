@@ -256,6 +256,15 @@ public class GameLeftFragment extends Fragment implements ICallback{
                     startActivity(intent);
                 }
             });
+            viewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,GameHotActivity.class);
+                    gids =  datas.get(addTimeLists.get(groupPosition)).get(childPosition).getGid();
+                    intent.putExtra("gid",gids);
+                    startActivity(intent);
+                }
+            });
 
 
             return view;
