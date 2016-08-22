@@ -30,8 +30,8 @@ public class HttpUtils {
         if (executorService == null) {
             executorService = Executors.newFixedThreadPool(3);
         }
-        HttpThread httpThread = new HttpThread();
-        httpThread.start(path);
+        HttpThread httpThread = new HttpThread(path);
+//        httpThread.start(path);
         return httpThread;
     }
 
@@ -41,12 +41,19 @@ public class HttpUtils {
        private int requestCode;
        private boolean isPost;
        private String params;
-          /*
-           出口
-            */
+       private String path;
+
+       public HttpThread(String path) {
+           this.path = path;
+       }
+
+       /*
+                  出口
+                   */
         public void callback(ICallback callback,int requestCode) {
             this.callback = callback;
             this.requestCode = requestCode;
+            start(path);
         }
 
        public HttpThread post(Map<String,Object> param) {

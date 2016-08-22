@@ -1,4 +1,4 @@
-package com.example.androidjj.giftapp.Fragment;
+package com.example.androidjj.giftapp.JavaBean;
 
 import java.util.List;
 

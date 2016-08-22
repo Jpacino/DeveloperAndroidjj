@@ -1,6 +1,7 @@
 package com.example.androidjj.giftapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +19,9 @@ import android.widget.TextView;
 import com.androidxx.yangjw.httplibrary.HttpUtils;
 import com.androidxx.yangjw.httplibrary.ICallback;
 import com.androidxx.yangjw.imageloader.ImageLoader;
+import com.example.androidjj.giftapp.JavaBean.SpecialBean;
 import com.example.androidjj.giftapp.R;
+import com.example.androidjj.giftapp.SpecialDetailsLeftActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -39,6 +43,7 @@ public class SpecialLeftFragment extends Fragment implements ICallback {
     private PullToRefreshListView specialLeftLv;
     private MyLvAdapter myLvAdapter;
     private String jsonString;
+    private String sid;
     private List<SpecialBean> lists = new ArrayList<>();
     private Handler handler = new Handler(){
         @Override
@@ -126,6 +131,19 @@ public class SpecialLeftFragment extends Fragment implements ICallback {
             ImageLoader.init(mContext).load("http://www.1688wan.com"+lists.get(position).getIconurl(),viewHolder.iconUrlIv);
             viewHolder.addTimeTv.setText(lists.get(position).getAddtime());
             viewHolder.nameTv.setText(lists.get(position).getName());
+            specialLeftLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mContext, SpecialDetailsLeftActivity.class);
+                    sid = String.valueOf(lists.get(position-1).getSid());
+                    intent.putExtra("id",sid);
+                    intent.putExtra("addtime",lists.get(position-1).getAddtime());
+                    intent.putExtra("iconurl","http://www.1688wan.com"+lists.get(position-1).getIconurl());
+                    intent.putExtra("descs",lists.get(position-1).getDescs());
+                    intent.putExtra("name",lists.get(position-1).getName());
+                    startActivity(intent);
+                }
+            });
             return view;
         }
 

@@ -1,4 +1,4 @@
-package com.example.androidjj.giftapp.Fragment;
+package com.example.androidjj.giftapp.JavaBean;
 
 import java.util.List;
 
@@ -6,7 +6,17 @@ import java.util.List;
  * Created by Jpacino on 2016/8/17.
  */
 public class SpecialBean {
-        private int sid;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private int sid;
         private String name;
         private int state;
         private String addtime;

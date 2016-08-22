@@ -1,6 +1,7 @@
 package com.example.androidjj.giftapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,27 +26,35 @@ import android.widget.TextView;
 import com.androidxx.yangjw.httplibrary.HttpUtils;
 import com.androidxx.yangjw.httplibrary.ICallback;
 import com.androidxx.yangjw.imageloader.ImageLoader;
+import com.example.androidjj.giftapp.GiftActivity;
+import com.example.androidjj.giftapp.GiftDetailsActivity;
 import com.example.androidjj.giftapp.JavaBean.GiftAdBean;
 import com.example.androidjj.giftapp.JavaBean.GiftListBean;
 import com.example.androidjj.giftapp.R;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by Jpacino on 2016/8/15.
  */
 public class GiftFragment extends Fragment implements ICallback {
     public static final String URL_GIFT = "http://www.1688wan.com/majax.action?method=getGiftList";
-    private static final String TAG = "androidjj";
+    private static final String TAG = "androidjjj";
     private Context mContext;
-    private ListView giftLv;
+    private PullToRefreshListView giftLv;
     private ViewPager giftVp;
     private MyPagerAdapter myPagerAdapter = new MyPagerAdapter();
     private MyLvAdapter myLvAdapter = new MyLvAdapter();
@@ -54,6 +64,8 @@ public class GiftFragment extends Fragment implements ICallback {
     private LinearLayout mLinearLayout;
     private int childCount;
     private int num = 1000;
+    private int pageno =1;
+    private String ids;
     private boolean isAutoScroll = true;
     private List<GiftListBean> lists = new ArrayList();
     private List<GiftAdBean> ads = new ArrayList();
@@ -62,6 +74,7 @@ public class GiftFragment extends Fragment implements ICallback {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
+                giftLv.onRefreshComplete();
                 myLvAdapter.notifyDataSetChanged();
 
             }
@@ -100,7 +113,9 @@ public class GiftFragment extends Fragment implements ICallback {
         View view = inflater.inflate(R.layout.gift_fragment_layout, container, false);
         View headView = inflater.inflate(R.layout.gift_headview, null);
         initView(view);
-        giftLv.addHeaderView(headView);
+
+        giftLv.getRefreshableView().addHeaderView(headView);
+        giftLv.setMode(PullToRefreshBase.Mode.BOTH);
         initHeadView(headView);
         loadNetDate();
         mHandler.sendEmptyMessageDelayed(3, 2000);
@@ -111,6 +126,7 @@ public class GiftFragment extends Fragment implements ICallback {
     }
 
     private void loadNetDate() {
+        postMaps.clear();
         postMaps.put("pageno", "1");
         HttpUtils.load(URL_GIFT).post(postMaps).callback(this, 1);
 
@@ -140,11 +156,42 @@ public class GiftFragment extends Fragment implements ICallback {
                 return false;
             }
         });
+
     }
 
     private void initView(View view) {
-        giftLv = (ListView) view.findViewById(R.id.gift_lv);
+        giftLv = (PullToRefreshListView) view.findViewById(R.id.gift_lv);
+        giftLv.setMode(PullToRefreshBase.Mode.BOTH);
 
+        giftLv.setLastUpdatedLabel(new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss").format(new Date()));
+        setupRefreshControl();
+
+    }
+    private void setupRefreshControl() {
+        giftLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                postMaps.clear();
+                for(int i = 1 ; i <=pageno;i++) {
+                    postMaps.put("pageno", i);
+                    if (i == 1) {
+                        HttpUtils.load(URL_GIFT).post(postMaps).callback(GiftFragment.this, 1);
+                    }else {
+                        HttpUtils.load(URL_GIFT).post(postMaps).callback(GiftFragment.this, 2);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                postMaps.clear();
+                pageno +=1;
+                postMaps.put("pageno",pageno);
+                HttpUtils.load(URL_GIFT).post(postMaps).callback(GiftFragment.this, 2);
+
+            }
+        });
     }
 
     private void controlPoint(int index) {
@@ -175,7 +222,12 @@ public class GiftFragment extends Fragment implements ICallback {
     @Override
     public void success(String result, int requestCode) {
         if (requestCode == 1) {
+            lists.clear();
             jsonString = result;
+        }
+        if (requestCode == 2){
+
+        jsonString = result;
         }
         try {
             JSONObject giftObject = new JSONObject(jsonString);
@@ -190,7 +242,8 @@ public class GiftFragment extends Fragment implements ICallback {
                 String iconurl = jsonObjectList.getString("iconurl");
                 String number = jsonObjectList.getString("number");
                 String addtime = jsonObjectList.getString("addtime");
-                GiftListBean giftList = new GiftListBean(giftname, gname, iconurl, number, addtime);
+                String id = jsonObjectList.getString("id");
+                GiftListBean giftList = new GiftListBean(giftname, gname, iconurl, number, addtime,id);
                 lists.add(giftList);
             }
             mHandler.sendEmptyMessage(1);
@@ -202,8 +255,6 @@ public class GiftFragment extends Fragment implements ICallback {
             }
             mHandler.sendEmptyMessage(2);
 
-
-            Log.d(TAG, "adsSize" + ads.size() + "listsSize" + lists.size());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -242,6 +293,7 @@ public class GiftFragment extends Fragment implements ICallback {
 
     private class MyLvAdapter extends BaseAdapter {
 
+
         @Override
         public int getCount() {
             return lists == null ? 0 : lists.size();
@@ -259,6 +311,7 @@ public class GiftFragment extends Fragment implements ICallback {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            final int positions = position;
             View view = convertView;
             ViewHolder viewHolder;
             if (view == null) {
@@ -281,6 +334,25 @@ public class GiftFragment extends Fragment implements ICallback {
                 viewHolder.button.setText("立即领取");
                 viewHolder.button.setBackgroundColor(Color.parseColor("#fd6563"));
             }
+            viewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, GiftDetailsActivity.class);
+                    ids = lists.get(positions).getId();
+                    intent.putExtra("id",ids);
+                    startActivity(intent);
+                }
+
+            });
+            giftLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mContext, GiftDetailsActivity.class);
+                    ids = lists.get(position-2).getId();
+                    intent.putExtra("id",ids);
+                    startActivity(intent);
+                }
+            });
 
 
                 return view;
@@ -297,10 +369,10 @@ public class GiftFragment extends Fragment implements ICallback {
             public ViewHolder(View view) {
                 view.setTag(this);
                 button = (Button) view.findViewById(R.id.gift_item_btn);
-                imageView = (ImageView) view.findViewById(R.id.hot_item_image_icon);
+                imageView = (ImageView) view.findViewById(R.id.gift_item_image_icon);
                 nameTextView = (TextView) view.findViewById(R.id.gift_item_text_view01);
-                name2TextView = (TextView) view.findViewById(R.id.hot_item_text_name);
-                numberTextView = (TextView) view.findViewById(R.id.hot_item_text_size);
+                name2TextView = (TextView) view.findViewById(R.id.gift_item_text_name);
+                numberTextView = (TextView) view.findViewById(R.id.gift_item_text_size);
                 addtimeTextView = (TextView) view.findViewById(R.id.gift_item_text_addtime);
             }
 

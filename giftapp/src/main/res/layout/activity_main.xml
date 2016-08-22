@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.androidjj.giftapp.MainActivity">
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/actionbar_frame_layout"
         android:layout_width="match_parent"
@@ -76,10 +83,135 @@
             android:drawableBottom="@drawable/special_selector"
             android:gravity="center_horizontal" />
 
-
-
-
-
-
     </RadioGroup>
+    </RelativeLayout>
+<RelativeLayout
+    android:id="@+id/main_drawer_left_rl"
+    android:clickable="true"
+    android:layout_width="350dp"
+    android:background="@drawable/menu_background"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="left">
+<RelativeLayout
+    android:layout_margin="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/menu_login_iv"
+
+        app:civ_border_width="3dp"
+        app:civ_border_color="@color/button_n"
+        android:src="@drawable/def_loading"
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
+    <Button
+        android:onClick="click"
+        android:id="@+id/menu_login_btn"
+        android:layout_toRightOf="@id/menu_login_iv"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/btn_selector"
+        android:text="请登录"
+        android:textSize="18dp"
+        android:background="@color/textTransparent"/>
+</RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       >
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_home"/>
+        <Button
+            android:onClick="click"
+            android:id="@+id/menu_home_btn"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/btn_selector"
+            android:text="主页"
+            android:textSize="18dp"
+            android:background="@color/textTransparent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/my_gift"/>
+            <Button
+                android:onClick="click"
+                android:id="@+id/menu_gift_btn"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:paddingLeft="22dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/btn_selector"
+                android:text="我的礼包"
+                android:textSize="18dp"
+                android:background="@color/textTransparent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/send_email"/>
+            <Button
+                android:onClick="click"
+                android:id="@+id/menu_advise_btn"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/btn_selector"
+                android:paddingLeft="22dp"
+                android:text="提个建议"
+                android:textSize="18dp"
+                android:background="@color/textTransparent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/about_me"/>
+            <Button
+                android:onClick="click"
+                android:id="@+id/menu_about_btn"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/btn_selector"
+                android:paddingLeft="22dp"
+                android:text="关于我们"
+                android:textSize="18dp"
+                android:background="@color/textTransparent"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+    </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>

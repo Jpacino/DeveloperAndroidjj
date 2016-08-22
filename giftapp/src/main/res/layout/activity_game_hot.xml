@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.androidjj.giftapp.GameHotActivity">
+
+    <RelativeLayout
+        android:id="@+id/about_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/button_u">
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@color/textTransparent"
+            android:drawableLeft="@drawable/back"
+            android:onClick="click" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于我们"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/game_hot_rl1"
+        android:layout_margin="10dp"
+        android:layout_below="@id/about_actionbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/gift_item_image_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/gift_item_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignLeft="@+id/hot_item_text_typename"
+            android:layout_alignTop="@id/gift_item_image_icon"
+            android:text="hello" />
+
+        <TextView
+            android:id="@id/hot_item_text_typename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/gift_item_image_icon"
+            android:text="测试"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/gift_item_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/gift_item_image_icon"
+            android:layout_alignLeft="@id/hot_item_text_typename"
+            android:text="大小:1G"
+            android:textSize="10dp" />
+
+    </RelativeLayout>
+    <HorizontalScrollView
+        android:id="@+id/game_hot_sv"
+        android:layout_below="@id/game_hot_rl1"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/game_hot_svll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    <TextView
+        android:text="游戏介绍"
+        android:id="@+id/game_hot_tv1"
+        android:layout_below="@id/game_hot_sv"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/special_left_content_tv"
+        android:text="内容"
+        android:layout_below="@id/game_hot_tv1"
+        android:layout_margin="10dp"
+        android:textSize="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="立即下载"
+        android:textColor="@color/btn_selector"
+        android:background="@color/button_u"/>
+</RelativeLayout>

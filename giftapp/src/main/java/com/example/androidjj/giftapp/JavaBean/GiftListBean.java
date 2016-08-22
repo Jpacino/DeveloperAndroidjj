@@ -9,13 +9,25 @@ public class GiftListBean {
     private String iconurl;
     private String number;
     private String addtime;
+    private String id;
 
-    public GiftListBean(String giftname, String gname, String iconurl, String number, String addtime) {
+
+
+    public GiftListBean(String giftname, String gname, String iconurl, String number, String addtime,String id) {
+        this.id = id;
         this.giftname = giftname;
         this.gname = gname;
         this.iconurl = iconurl;
         this.number = number;
         this.addtime = addtime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGiftname() {

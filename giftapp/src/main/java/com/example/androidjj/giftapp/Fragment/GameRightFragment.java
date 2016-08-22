@@ -2,6 +2,7 @@ package com.example.androidjj.giftapp.Fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,20 +15,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.androidxx.yangjw.httplibrary.HttpUtils;
 import com.androidxx.yangjw.httplibrary.ICallback;
 import com.androidxx.yangjw.imageloader.ImageLoader;
+import com.example.androidjj.giftapp.GameHotActivity;
+import com.example.androidjj.giftapp.JavaBean.GameBean;
 import com.example.androidjj.giftapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,11 +47,13 @@ public class GameRightFragment extends Fragment implements ICallback {
     private PullToRefreshListView gameRightLv;
     private MylvAdapter mylvAdapter;
     String jsonString;
+    String gids;
     private List<GameBean> infolists;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            gameRightLv.onRefreshComplete();
             mylvAdapter.notifyDataSetChanged();
         }
     };
@@ -70,8 +79,29 @@ public class GameRightFragment extends Fragment implements ICallback {
     private void initVIew(View view) {
         loadData();
         gameRightLv = (PullToRefreshListView) view.findViewById(R.id.game_right_lv);
+        gameRightLv.setMode(PullToRefreshBase.Mode.BOTH);
         mylvAdapter = new MylvAdapter();
         gameRightLv.setAdapter(mylvAdapter);
+        gameRightLv.setLastUpdatedLabel(new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss").format(new Date()));
+        gameRightLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                if(infolists!=null){
+                    infolists.clear();
+                }
+                loadData();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                if(infolists!=null){
+                    infolists.clear();
+                }
+                loadData();
+
+
+            }
+        });
     }
 
     private void loadData() {
@@ -119,7 +149,7 @@ public class GameRightFragment extends Fragment implements ICallback {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View view = convertView;
             ViewHolder viewHolder;
             if (view == null) {
@@ -136,6 +166,15 @@ public class GameRightFragment extends Fragment implements ICallback {
             viewHolder.gnameTv.setText(infolists.get(position).getGname());
             viewHolder.button.setText("查看");
             viewHolder.button.setBackgroundColor(Color.parseColor("#fd6563"));
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,GameHotActivity.class);
+                    gids =  infolists.get(position).getGid();
+                    intent.putExtra("gid",gids);
+                    startActivity(intent);
+                }
+            });
             return view;
 
         }
@@ -150,9 +189,9 @@ public class GameRightFragment extends Fragment implements ICallback {
 
             public ViewHolder(View view) {
                 view.setTag(this);
-                imageView = (ImageView) view.findViewById(R.id.hot_item_image_icon);
+                imageView = (ImageView) view.findViewById(R.id.gift_item_image_icon);
                 operatorsTv = (TextView) view.findViewById(R.id.gift_item_text_view01);
-                gnameTv = (TextView) view.findViewById(R.id.hot_item_text_name);
+                gnameTv = (TextView) view.findViewById(R.id.gift_item_text_name);
                 addtimeTv = (TextView) view.findViewById(R.id.gift_item_text_addtime);
                 button = (Button) view.findViewById(R.id.gift_item_btn);
             }

@@ -1,4 +1,4 @@
-package com.example.androidjj.giftapp.Fragment;
+package com.example.androidjj.giftapp.JavaBean;
 
 /**
  * Created by Jpacino on 2016/8/17.

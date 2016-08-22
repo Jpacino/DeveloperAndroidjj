@@ -7,6 +7,7 @@
     android:layout_height="50dp">
 
     <Button
+        android:onClick="click"
         android:id="@+id/main_menu_btn"
         android:background="@color/textTransparent"
         android:drawableLeft="@drawable/title_bar_menu"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:text="礼包精灵"/>
     <Button
+        android:onClick="click"
         android:background="@color/textTransparent"
         android:id="@+id/main_search_btn"
         android:layout_centerVertical="true"

@@ -2,6 +2,7 @@ package com.example.androidjj.giftapp.Fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,27 +10,36 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.androidxx.yangjw.httplibrary.HttpUtils;
 import com.androidxx.yangjw.httplibrary.ICallback;
 import com.androidxx.yangjw.imageloader.ImageLoader;
+import com.example.androidjj.giftapp.GameHotActivity;
+import com.example.androidjj.giftapp.JavaBean.GameBean;
 import com.example.androidjj.giftapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,20 +50,22 @@ import java.util.Map;
 public class GameLeftFragment extends Fragment implements ICallback{
     public static final String GAME_URL = "http://www.1688wan.com/majax.action?method=getJtkaifu";
     public static final String TAG = "androidjjj";
-    private ExpandableListView gameLeftLv;
+    private PullToRefreshExpandableListView gameLeftLv;
     private MyLvAdapter myLvAdapter;
     private String jsonString;
     private List<GameBean> infoLists;
     private List<String> addTimeLists = new ArrayList<>();
     private Map<String,List<GameBean>> datas = new HashMap<>();
     private ArrayList<GameBean> childLists;
+    private String gids;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            gameLeftLv.onRefreshComplete();
             myLvAdapter.notifyDataSetChanged();
             for (int i = 0; i < addTimeLists.size(); i++) {
-                gameLeftLv.expandGroup(i);
+                gameLeftLv.getRefreshableView().expandGroup(i);
             }
         }
     };
@@ -79,22 +91,54 @@ public class GameLeftFragment extends Fragment implements ICallback{
 
     private void initView(View view) {
         loadData();
-        gameLeftLv = (ExpandableListView) view.findViewById(R.id.game_left_lv);
+        gameLeftLv = (PullToRefreshExpandableListView) view.findViewById(R.id.game_left_lv);
         myLvAdapter = new MyLvAdapter();
-        gameLeftLv.setAdapter(myLvAdapter);
-
-
-        gameLeftLv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        gameLeftLv.getRefreshableView().setAdapter(myLvAdapter);
+        gameLeftLv.getRefreshableView().setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 return true;
             }
         });
 
+        gameLeftLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: ");
+                Intent intent = new Intent(mContext, GameHotActivity.class);
+                startActivity(intent);
+            }
+        });
+        gameLeftLv.setMode(PullToRefreshBase.Mode.BOTH);
+        gameLeftLv.setLastUpdatedLabel(new SimpleDateFormat("yyyy-MM-dd    hh:mm:ss").format(new Date()));
+        setupRefreshControl();
+
+
+
+    }
+    private void setupRefreshControl() {
+        gameLeftLv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ExpandableListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+                if(infoLists!=null){
+                    infoLists.clear();
+                }
+                loadData();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+                if(infoLists!=null){
+                    infoLists.clear();
+                }
+                loadData();
+            }
+        });
 
     }
 
     private void loadData() {
+
         HttpUtils.load(GAME_URL).callback(this,1);
     }
 
@@ -130,7 +174,7 @@ public class GameLeftFragment extends Fragment implements ICallback{
         }
     }
 
-    class MyLvAdapter extends BaseExpandableListAdapter {
+    class MyLvAdapter extends BaseExpandableListAdapter{
 
 
         @Override
@@ -183,7 +227,10 @@ public class GameLeftFragment extends Fragment implements ICallback{
         }
 
         @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            final  int groupPositions = groupPosition;
+           final int childPositions = childPosition;
+
             View view = convertView;
             ViewHolder viewHolder;
             if (view == null) {
@@ -199,6 +246,18 @@ public class GameLeftFragment extends Fragment implements ICallback{
             viewHolder.startTimeTv.setText(datas.get(addTimeLists.get(groupPosition)).get(childPosition).getLinkurl());
             viewHolder.button.setText("查看");
             viewHolder.button.setBackgroundColor(Color.parseColor("#fd6563"));
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,GameHotActivity.class);
+                    gids =  datas.get(addTimeLists.get(groupPosition)).get(childPosition).getGid();
+                    intent.putExtra("gid",gids);
+                    startActivity(intent);
+                }
+            });
+
+
             return view;
         }
 
@@ -206,6 +265,7 @@ public class GameLeftFragment extends Fragment implements ICallback{
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
+
         class ViewHolder {
             private final TextView gnameTv;
             private final TextView startTimeTv;
@@ -215,8 +275,8 @@ public class GameLeftFragment extends Fragment implements ICallback{
 
             public ViewHolder(View view){
                 view.setTag(this);
-                imageView = (ImageView) view.findViewById(R.id.hot_item_image_icon);
-                gnameTv = (TextView) view.findViewById(R.id.hot_item_text_name);
+                imageView = (ImageView) view.findViewById(R.id.gift_item_image_icon);
+                gnameTv = (TextView) view.findViewById(R.id.gift_item_text_name);
                 startTimeTv = (TextView) view.findViewById(R.id.gift_item_text_view01);
                 operatorsTv = (TextView) view.findViewById(R.id.gift_item_text_addtime);
                 button = (Button) view.findViewById(R.id.gift_item_btn);

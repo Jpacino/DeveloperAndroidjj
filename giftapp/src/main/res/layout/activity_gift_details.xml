@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GiftDetailsActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/gift_detail_actionbar"
+        android:layout_width="match_parent"
+        android:background="@color/button_u"
+        android:layout_height="50dp">
+
+        <Button
+            android:onClick="click"
+            android:id="@+id/gift_back_btn"
+            android:background="@color/textTransparent"
+            android:drawableLeft="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/detail_name_tv"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于我们"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@id/gift_detail_actionbar"
+        android:id="@+id/detail_rl1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/lb_bg"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/detail_circle_iv"
+            android:layout_centerInParent="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:civ_border_color="@color/button_u"
+            app:civ_border_width="2dp"
+            android:src="@mipmap/ic_launcher"/>
+        <RelativeLayout
+            android:background="#30000000"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/detail_overtime_tv"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="hello"
+                android:textColor="@color/button_n"/>
+            <TextView
+                android:id="@+id/detail_exchanges_tv"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hello"
+                android:textColor="@color/button_n"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/detail_rl1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/detail_title1_tv"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="礼包说明"/>
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/detail_title1_tv"
+            android:layout_width="80dp"
+            android:layout_height="1dp"
+            android:background="@color/button_u"/>
+        <TextView
+
+            android:id="@+id/detail_content1_tv"
+            android:layout_margin="10dp"
+            android:textSize="12dp"
+            android:layout_below="@id/detail_title1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内容"
+            />
+        <TextView
+            android:layout_below="@id/detail_content1_tv"
+            android:id="@+id/detail_title2_tv"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="兑换方式"/>
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/detail_title2_tv"
+            android:layout_width="80dp"
+            android:layout_height="1dp"
+            android:background="@color/button_u"/>
+        <TextView
+
+            android:id="@+id/detail_content2_tv"
+            android:layout_margin="10dp"
+            android:textSize="12dp"
+            android:layout_below="@id/detail_title2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内容"
+            />
+
+
+<Button
+    android:id="@+id/detail_bottom_btn"
+    android:onClick="click"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:text="立即领取"
+    android:background="@color/button_u"
+    android:textColor="@color/btn_selector"
+    android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

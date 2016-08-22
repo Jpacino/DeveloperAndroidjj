@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+    <ImageView
+        android:id="@+id/details_tese_right_lv_iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="8dp"
+        />
+    <TextView
+        android:id="@+id/details_tese_right_lv_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="逍遥西游2"
+        android:layout_toRightOf="@id/details_tese_right_lv_iv"
+        android:layout_alignTop="@id/details_tese_right_lv_iv"
+        />
+    <TextView
+        android:id="@+id/details_tese_right_lv_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="类型:角色扮演"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/details_tese_right_lv_iv"
+        android:layout_toEndOf="@+id/details_tese_right_lv_iv" />
+    <TextView
+        android:id="@+id/details_tese_right_lv_size_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="大小:300M"
+        android:layout_alignTop="@+id/details_tese_right_lv_type_tv"
+        android:layout_toRightOf="@+id/details_tese_right_lv_type_tv"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/details_tese_right_lv_content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="这是内容"
+        android:singleLine="true"
+        android:layout_alignBottom="@+id/details_tese_right_lv_iv"
+        android:layout_alignLeft="@+id/details_tese_right_lv_type_tv"
+        android:layout_alignStart="@+id/details_tese_right_lv_type_tv" />
+    <TextView
+        android:gravity="center"
+        android:layout_width="119dp"
+        android:layout_height="40dp"
+        android:text="下载"
+        android:textSize="10sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/button_n"
+        android:background="#fd7472"/>
+
+</RelativeLayout>

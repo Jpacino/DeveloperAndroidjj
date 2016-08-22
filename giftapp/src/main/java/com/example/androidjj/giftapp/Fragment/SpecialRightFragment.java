@@ -1,6 +1,7 @@
 package com.example.androidjj.giftapp.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +19,9 @@ import android.widget.TextView;
 import com.androidxx.yangjw.httplibrary.HttpUtils;
 import com.androidxx.yangjw.httplibrary.ICallback;
 import com.androidxx.yangjw.imageloader.ImageLoader;
+import com.example.androidjj.giftapp.JavaBean.SpecialBean;
 import com.example.androidjj.giftapp.R;
+import com.example.androidjj.giftapp.SpecialDetailsRightActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -70,6 +74,7 @@ public class SpecialRightFragment extends Fragment implements ICallback {
         specialRightLv = (PullToRefreshListView) view.findViewById(R.id.special_right_lv);
         myLvAdapter = new MyLvAdapter();
         specialRightLv.setAdapter(myLvAdapter);
+
     }
 
     private void initData() {
@@ -87,7 +92,7 @@ public class SpecialRightFragment extends Fragment implements ICallback {
             Gson gson = new Gson();
             Type type = new TypeToken<List<SpecialBean>>(){}.getType();
             lists = gson.fromJson(stringArraylists,type);
-            Log.d(TAG, "success: "+lists.size());
+            Log.d(TAG, "success111: "+lists.size());
             handler.sendEmptyMessage(1);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -126,6 +131,17 @@ public class SpecialRightFragment extends Fragment implements ICallback {
             viewHolder.iconUrlIv.setImageResource(R.mipmap.ic_launcher);
             ImageLoader.init(mContext).load( "http://www.1688wan.com"+lists.get(position).getIconurl(),viewHolder.iconUrlIv);
             viewHolder.nameTv.setText(lists.get(position).getName());
+            specialRightLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mContext, SpecialDetailsRightActivity.class);
+                    intent.putExtra("image","http://www.1688wan.com"+lists.get(position-1).getIconurl());
+                    intent.putExtra("descs",lists.get(position-1).getDescs());
+                    intent.putExtra("name",lists.get(position-1).getName());
+                    intent.putExtra("id",lists.get(position-1).getId());
+                    startActivity(intent);
+                }
+            });
             return view;
         }
         class ViewHolder{

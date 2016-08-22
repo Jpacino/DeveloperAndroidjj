@@ -5,6 +5,7 @@
     android:background="@color/button_u"
     android:layout_height="50dp">
     <Button
+        android:onClick="click"
         android:id="@+id/main_menu_btn"
         android:background="@color/textTransparent"
         android:drawableLeft="@drawable/title_bar_menu"

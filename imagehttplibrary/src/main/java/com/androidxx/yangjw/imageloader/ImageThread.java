@@ -80,7 +80,7 @@ public class ImageThread implements Runnable {
                 BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
                 int outHeight = options.outHeight;
                 int outWidth = options.outWidth;
-                int ratio = outHeight/100;
+                int ratio = outHeight/200;
                 if (ratio >= 1) {
                     options.inSampleSize = ratio;
                 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/special_item_right_iv"
         android:layout_width="match_parent"
@@ -22,7 +23,9 @@
             android:textSize="15dp"
             android:layout_marginLeft="5dp"
             android:textColor="@color/button_n" />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="@color/button_n"
+            app:civ_border_width="2dp"
             android:id="@+id/special_item_right_iv2"
             android:layout_alignParentRight="true"
             android:layout_width="38dp"
